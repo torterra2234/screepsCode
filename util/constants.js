@@ -1,25 +1,43 @@
 const maths = require('maths');
 
-global.ROOMCOUNT = {};
-global.ROOMCOUNT.HARVEST = 1;
-global.ROOMCOUNT.UPGRADE = 1;
-global.ROOMCOUNT.BUILDER = 1;
+module.exports = {};
 
-global.ROOM_TOTAL = ROOMCOUNT.reduce(maths.add,0);
+module.exports.roles = {
+    HARVEST: 1,
+    UPGRADE: 2,
+    BUILDER: 3,
+};
 
-global.ROLE_HARVEST = 1;
-global.ROLE_UPGRADE = 2;
-global.ROLE_BUILDER = 3;
+module.exports.units = {
+    roomCount: {
+    HARVEST: 1,
+    UPGRADE: 1,
+    BUILDER: 1,
+    TOTAL: 3,
+    },
+};
 
-global.PATH_HARVEST = '#ffffff'
-global.PATH_UPGRADE = '#ff00ff'
-global.PATH_BUILDER = '#00ff00'
+module.exports.colours = {
+    path: {
+    HARVEST: '#ffffff',
+    UPGRADE: '#ff00ff',
+    BUILDER: '#ffff00',
+    ATTACKER: '#ff0000',
+    DEFENDER: '#0000ff',
+    HEALER: '#00ff00',
+    RANGER: '#00ffff',
+    RANGEDHEALER: '#00ff88',
+    },
+};
 
-global.TMPLT_HARVEST = {};
-global.TMPLT_HARVEST.TIER1 = [MOVE,WORK,CARRY];
-
-global.TMPLT_UPGRADE = {};
-global.TMPLT_UPGRADE.TIER1 = [MOVE,WORK,CARRY];
-
-global.TMPLT_BUILDER = {};
-global.TMPLT_BUILDER.TIER1 = [MOVE,WORK,CARRY];
+module.exports.templates = {
+    harvest: {
+        TIER1: [MOVE,WORK,CARRY],
+    },
+    upgrade: {
+        TIER1: [MOVE,WORK,CARRY],
+    },
+    builder: {
+        TIER1: [MOVE,WORK,CARRY],
+    },
+};

@@ -14,10 +14,7 @@ module.exports.loop = function(){
         }
 	}
 	// creep create code
-	/*if(Game.creeps.length < )
-	for(let name in Game.creeps){
-		unit =
-	}*/
+	
 	// creep move loop
 	for(let name in Game.creeps){
 		unit = Game.creeps[name];
