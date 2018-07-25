@@ -1,3 +1,7 @@
 Room.prototype.getCreeps = function(){
-    return Game.creeps.filter(unit => Game.creeps.room == room.name);
+    return Game.creeps.filter(unit => Game.creeps.room === room);
+}
+
+Room.prototype.getSpawn = function(){
+    return Game.spawns.filter(spawn => Game.spawns.room === room);
 }
