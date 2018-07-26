@@ -3,6 +3,8 @@ const roleHarvest = require('roleHarvest');
 const roleUpgrade = require('roleUpgrade');
 const roleBuilder = require('roleBuilder');
 
+const Harvester = new Role('Harvester', 1, 'harvesterAi');
+
 module.exports.loop = function(){
 
 	// deleting old creeps
