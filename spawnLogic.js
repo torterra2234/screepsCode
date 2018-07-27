@@ -65,7 +65,7 @@ module.exports.spawnNext = function(room){
 module.exports.getAllNeededSpawns = function(room){
     let roomCreeps = _.filter(Game.creeps, creep => creep.room.name === room).filter(creep => creep.my);
     //log.debug(roomCreeps);
-    if(roomCreeps < roomCreepCount){
+    if(roomCreeps.length < roomCreepCount){
         for(let role in Roles){
             module.exports.getRoleNeededSpawns(role, room, roomCreeps);
         }
