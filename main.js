@@ -2,6 +2,8 @@ const log = require('logger');
 const spawnAi = require('spawnLogic');
 const Roles = require('Roles');
 const maths = require('maths');
+const consts = require('constants');
+require('prototype.room')();
 
 global.roomCreepCount = maths.calcRRC();
 
@@ -17,7 +19,8 @@ module.exports.loop = function(){
 	}
 	// creep create code
 	//need code for checking spawner is unoccupied, per room
-	for(let room in Game.rooms){
+	for(let name in Game.rooms){
+		let room = Game.rooms[name];
 		if(Game.time%10 === 0){
 			spawnAi.getAllNeededSpawns(room);
 		}

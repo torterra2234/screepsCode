@@ -1,25 +1,53 @@
-module.exports = function(){
-    Object.defineProperty(Room.prototype, 'creeps',{
-        get: function(){
-            return _.filter(Game.creeps, creep => creep.room.name === room.name);
+module.exports = function() {
+    Object.defineProperty(Room.prototype, {
+        'spawners': {
+            get: function() {
+                if(this.spawners) return this.spawners;
+            },
+            set: function(newValue){
+                this.spawers = newValue;
+            },
+            enumerable: false,
+            configurable: true,
         },
-        enumerable: false,
-        configurable: true,
     });
+    Room.prototype.getCreeps = function(){
+        return _.filter(Game.creeps, function(creep){
+            return creep.room.name === this.name;
+        })
+    };
+    Object.defineProperty(Room.prototype, {
+        'spawnQueue': {
+            get: function() {
+                if(this.spawnQueue) return this.spawnQueue;
+            }
+        },
+        enumerable = false,
+        configurable = true,
+    });
+    Room.protoype.addToQueue = function(role){
+        this.spawnQueue.push(role);
+    };
+    Room.prototype.spawnedNext = function(){
+        this.spawnQueue.shift();
+    };
+    Room.prototype.spawnNext = function(role){
+        this.spawnQueue.unshift(role);
+    };
+    Room.prototype.getCountInQueue = function(roleType){
+        return _.filter(this.spawnQueue, function(role){
+            return role === roleTytpe;
+        }).length;
+    };
+    Room.prototype.removeFromQueue = function(delRole, pushToEnd = false){
+        let count = this.getCountInQueue(role);
+        this.spawnQueue = _.filter(_spawnQueue, function(role){
+            return role !== delRole;
+        });
+        if(pushToEnd){
+            for(;count > 0;count--){
+                this.addToQueue(role);
+            }
+        }
+    };
 };
-/*
-    Room.prototype._getSpawn = function(){
-        return Game.spawns.filter(creep => Game.spawns.room == room);
-    };
-
-    Room.prototype.setSpawners = function(){
-        this._spawners = this._getSpawn();
-    };
-
-    Room.prototype.getSpawners = function(){
-        return this._spawners;
-    };
-};
-*/
-
-//will revisit this at a later time, will not run...
