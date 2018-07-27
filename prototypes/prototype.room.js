@@ -1,3 +1,6 @@
+// descriptor must be an object, got undefined
+// but where?
+
 module.exports = function() {
     Room.prototype.getSpawners = function(){
         return this.find(FIND_MY_SPAWNS);
@@ -7,19 +10,21 @@ module.exports = function() {
             return creep.room.name === this.name;
         })
     };
-    Object.defineProperty(Room.prototype, {
-        'spawnQueue': {
+    Object.defineProperty(Room.prototype,
+        'spawnQueue', {
             get: function() {
-                if(!this.spawnQueue){
-                    this.spawnqueue = [];
+                if(!this._spawnQueue){
+                    if(!this.memory.spawnQueue){
+                        this.memory.spawnQueue = [];
+                    }
+                    this._spawnQueue = this.memory.spawnQueue;
                 }
-                return this.spawnQueue;
-            }
-        },
-        enumerable: false,
-        configurable: true,
+                return this._spawnQueue;
+            },
+            enumerable: false,
+            configurable: true,
     });
-    Room.protoype.addToQueue = function(role){
+    Room.prototype.addToQueue = function(role){
         this.spawnQueue.push(role);
     };
     Room.prototype.spawnedNext = function(){
@@ -35,7 +40,7 @@ module.exports = function() {
     };
     Room.prototype.removeFromQueue = function(delRole, pushToEnd = false){
         let count = this.getCountInQueue(role);
-        this.spawnQueue = _.filter(_spawnQueue, function(role){
+        this.spawnQueue = _.filter(spawnQueue, function(role){
             return role !== delRole;
         });
         if(pushToEnd){

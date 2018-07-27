@@ -1,9 +1,15 @@
 const log = require('logger');
+//log.debug('loaded logger');
 const spawnAi = require('spawnLogic');
+//log.debug('loader spawnLogic');
 const Roles = require('Roles');
+//log.debug('loaded Roles');
 const maths = require('maths');
+//log.debug('loaded maths');
 const consts = require('constants');
+//log.debug('loaded constants');
 require('prototype.room')();
+//log.debug('loaded room prototype');
 
 global.roomCreepCount = maths.calcRRC();
 

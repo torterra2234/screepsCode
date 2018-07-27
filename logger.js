@@ -3,7 +3,7 @@ module.exports = {
 		console.log('STATUS: ' + input);
 	},
 	debug:function(input){
-		console.log('DEBUG: ' + input);
+		console.log('DEBUG: ' + JSON.stringify(input));
 	},
 	warning:function(input){
 		console.log('WARNING: ' + input);
