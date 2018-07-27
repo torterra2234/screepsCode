@@ -1,16 +1,7 @@
 module.exports = function() {
-    Object.defineProperty(Room.prototype, {
-        'spawners': {
-            get: function() {
-                if(this.spawners) return this.spawners;
-            },
-            set: function(newValue){
-                this.spawers = newValue;
-            },
-            enumerable: false,
-            configurable: true,
-        },
-    });
+    Room.prototype.getSpawners = function(){
+        return this.find(FIND_MY_SPAWNS);
+    };
     Room.prototype.getCreeps = function(){
         return _.filter(Game.creeps, function(creep){
             return creep.room.name === this.name;
@@ -19,11 +10,14 @@ module.exports = function() {
     Object.defineProperty(Room.prototype, {
         'spawnQueue': {
             get: function() {
-                if(this.spawnQueue) return this.spawnQueue;
+                if(!this.spawnQueue){
+                    this.spawnqueue = [];
+                }
+                return this.spawnQueue;
             }
         },
-        enumerable = false,
-        configurable = true,
+        enumerable: false,
+        configurable: true,
     });
     Room.protoype.addToQueue = function(role){
         this.spawnQueue.push(role);

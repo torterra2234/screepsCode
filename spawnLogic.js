@@ -13,7 +13,7 @@ module.exports.getRoleNeededSpawns = function(role, room, roomCreeps){
 };
 
 module.exports.spawnNext = function(room){
-    log.debug(_spawnQueue);
+    log.debug(room.spawnQueue);
     if(_spawnQueue.length === 0){
         return 0;
     }
