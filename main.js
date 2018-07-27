@@ -11,10 +11,11 @@ const consts = require('constants');
 require('prototype.room')();
 //log.debug('loaded room prototype');
 
+
 global.roomCreepCount = maths.calcRRC();
 
 module.exports.loop = function(){
-    //log.debug(roomCreepCount);
+    log.debug(Game.time);
 	// deleting old creeps
 	// needs forcibly automating later if possible
 	for(var name in Memory.creeps) {

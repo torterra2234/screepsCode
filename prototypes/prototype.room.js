@@ -1,6 +1,3 @@
-// descriptor must be an object, got undefined
-// but where?
-
 module.exports = function() {
     Room.prototype.getSpawners = function(){
         return this.find(FIND_MY_SPAWNS);
@@ -35,7 +32,7 @@ module.exports = function() {
     };
     Room.prototype.getCountInQueue = function(roleType){
         return _.filter(this.spawnQueue, function(role){
-            return role === roleTytpe;
+            return role === roleType;
         }).length;
     };
     Room.prototype.removeFromQueue = function(delRole, pushToEnd = false){

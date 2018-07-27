@@ -13,13 +13,12 @@ module.exports.getRoleNeededSpawns = function(role, room, roomCreeps){
 };
 
 module.exports.spawnNext = function(room){
-    log.debug(room.spawnQueue);
-    if(_spawnQueue.length === 0){
+    if(room.spawnQueue.length === 0){
         return 0;
     }
-    let role = _spawnQueue[0];
+    let role = room.spawnQueue[0];
     //log.debug('role' + role);
-    let Spawner = room.spawners[0];
+    let Spawner = room.getSpawners()[0];
     //log.debug(Spawner);
     if(Spawner.spawnCreep(Roles[role].body, newName(role), {memory: {role: role}})){
         room.spawnedNext();
