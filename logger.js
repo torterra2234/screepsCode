@@ -1,4 +1,7 @@
 module.exports = {
+	status:function(input){
+		console.log('STATUS: ' + input);
+	},
 	debug:function(input){
 		console.log('DEBUG: ' + input);
 	},

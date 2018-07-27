@@ -1,55 +1,83 @@
-const consts = require('constants');
 const log = require('logger');
-const roles = require('roles');
+const Roles = require('Roles');
+const roomProto = require('room');
 
-module.exports.spawnAllNeeded = function(room){
-    let roomCreeps = room.getCreeps().filter(unit => unit.my);
-    if(roomCreeps < consts.ROOMCOUNT.TOTAL){
-        for(let role in roles){
-            spawnNeededRole(role, room, roomCreeps);
-        }
-        return OK;
-    }
-    return ERR_NOT_FOUND;
-};
+var _spawnQueue = [];
 
-//this is so wrong, but i cant figure out why
-module.exports.spawnNeededRoles = function(role, room, roomCreeps){
-    missing = roles[role].count;
-    missing-=roomCreeps.filter(thisRole => thisRole.role.name === role).length;
-    while(missing > 0){
-        spawn(room, role);
-    }
-};
-/*
-module.exports.spawnHarvesterNeeded = function(room, roomCreeps){
-    let missing = consts.units.roomcount.HARVEST;
-    for(let name in roomCreeps){
-        if(roomCreeps[name].memory.role === 'harvest'){
-            missing--;
-        }
-    }
-    if(missing === 0){
-        do{
-            spawn(room, 'harvester');
-            missing--;
-        }while(missing > 0);
-        return OK;
-    }else if(mising <= 0){
-        log.warning('Too many Harvesters!');
-    }
-};
-*/
-module.exports.spawn = function(room, roleType){
-    room.getSpawn().spawnCreep(templates.getBody(room, roleType.name), newName(roleType), {memory: {role: roleType.name}});
+function _addToQueue(role){
+    _spawnQueue.push(role);
 }
+
+function _addToQueueFront(role){
+    _spawnqueue.unshift(role);
+}
+
+function _popQueueStart(){
+    return _spawnQueue.shift();
+}
+
+function _removeAllFromQueue(delRole){
+    _spawnQueue = _.filter(_spawnQueue, role => role.name !== Roles[delRole].name);
+}
+
+function _removeFirstFromQueue(role){
+    _spawnQueue = _spawnQueue.splice(_spawnQueue.indexOf(role), 1);
+}
+
+function _removeLastFromQueue(role){
+    _spawnQueue = _spawnQueue.splice(_spawnQueue.lastIndexOf(role),1);
+}
+
+function _getQueueCount(roleFind){
+    return _.filter(_spawnQueue, role => Roles[role].name === Roles[roleFind].name).length;
+}
+
+module.exports.bumpSpawnNext = function(role){
+    _removeFirstFromQueue(role);
+    _addToQueueFront(role);
+};
+
+module.exports.getRoleNeededSpawns = function(role, room, roomCreeps){
+    let missing = Roles[role].count
+    missing -= _getQueueCount(role);
+    missing -= roomCreeps.filter(creep => Roles[role].name === creep.memory.role).length;
+    log.status('adding ' + missing + ' ' + Roles[role].name + (missing === 1 ? '' : 's') + ' to the spawn queue');
+    while(missing > 0){
+        _addToQueue(role);
+        missing--;
+    }
+};
+
+module.exports.spawnNext = function(room){
+    log.debug(_spawnQueue);
+    if(_spawnQueue.length === 0){
+        return 0;
+    }
+    let role = _spawnQueue[0];
+    //log.debug('role' + role);
+    let Spawner = roomProto.getSpawner(room);
+    //log.debug(Spawner);
+    if(Spawner.spawnCreep(Roles[role].body, newName(role), {memory: {role: role}})){
+        _popQueueStart();
+    }
+};
+
+module.exports.getAllNeededSpawns = function(room){
+    let roomCreeps = _.filter(Game.creeps, creep => creep.room.name === room).filter(creep => creep.my);
+    //log.debug(roomCreeps);
+    if(roomCreeps < roomCreepCount){
+        for(let role in Roles){
+            module.exports.getRoleNeededSpawns(role, room, roomCreeps);
+        }
+    }
+};
 
 function newName(role){
     let i = 0;
     do{
-        if(!Game.creeps[role.name + string(i)]){
-            return (role.name + string(i));
+        if(!Game.creeps[Roles[role].name + i]){
+            return (Roles[role].name + i);
         }
         i++;
-    }while(i < role.count)
+    }while(i < Roles[role].count)
 }

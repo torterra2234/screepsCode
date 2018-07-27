@@ -1,3 +1,6 @@
 [submodule "ScreepsAutocomplete"]
 	path = ScreepsAutocomplete
 	url = https://github.com/Garethp/ScreepsAutocomplete.git
+[submodule "Traveler"]
+	path = Traveler
+	url = https://github.com/bonzaiferroni/Traveler.git

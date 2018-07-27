@@ -1,3 +1,5 @@
+const consts = require('constants');
+
 var roleHarvest = {
 
     /** @param {Creep} creep **/
@@ -5,7 +7,7 @@ var roleHarvest = {
         if(creep.carry.energy < creep.carryCapacity) {
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0], {visualizePathStyle: {stroke: PATH_HARVEST}});
+                creep.moveTo(sources[0], {visualizePathStyle: {stroke: consts.colours.path.HARVEST}});
             }
         }
         else {
@@ -18,7 +20,7 @@ var roleHarvest = {
             });
             if(targets.length > 0) {
                 if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], {visualizePathStyle: {stroke: PATH_HARVEST}});
+                    creep.moveTo(targets[0], {visualizePathStyle: {stroke: consts.colours.path.HARVEST}});
                 }
             }
         }

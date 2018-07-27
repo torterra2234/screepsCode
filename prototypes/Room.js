@@ -1,15 +1,7 @@
-Room.prototype.getCreeps = function(){
-    return Game.creeps.filter(unit => Game.creeps.room === room);
-}
+// interim location for methods to end up in room prototype
 
-Room.prototype.getSpawn = function(){
-    return Game.spawns.filter(spawn => Game.spawns.room === room);
-}
+const log = require('logger');
 
-Room.prototype.setSpawners = function(){
-    this.spawners = this.getSpawn();
-}
-
-Room.prototype.getSpawners = function(){
-    return this.spawners;
-}
+module.exports.getSpawner = function(room){
+    return _.filter(Game.spawns, structureSpawn => structureSpawn.room.name === room)[0];
+};

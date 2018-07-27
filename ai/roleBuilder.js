@@ -1,3 +1,5 @@
+const consts = require('constants');
+
 var roleBuilder = {
 
     /** @param {Creep} creep **/
@@ -14,14 +16,14 @@ var roleBuilder = {
             var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
             if(targets.length) {
                 if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], {visualizePathStyle: {stroke: PATH_BUILDER}});
+                    creep.moveTo(targets[0], {visualizePathStyle: {stroke: consts.colours.path.BUILDER}});
                 }
             }
         }
         else {
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0], {visualizePathStyle: {stroke: PATH_BUILDER}});
+                creep.moveTo(sources[0], {visualizePathStyle: {stroke: consts.colours.path.BUILDER}});
             }
         }
     }
