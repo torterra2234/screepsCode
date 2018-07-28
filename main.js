@@ -10,7 +10,9 @@ const consts = require('constants');
 //log.debug('loaded constants');
 require('prototype.room')();
 //log.debug('loaded room prototype');
-
+require('Traveller.js');
+//log.debug('loaded Traveller');
+var action = require('aiActions');
 
 global.roomCreepCount = maths.calcRRC();
 

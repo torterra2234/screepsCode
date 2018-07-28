@@ -9,9 +9,38 @@
   * 
   * turn out this works differently, will have to check options for this
   */
+const action = require('aiActions');
 
 module.exports = {
     run: function(creep){
-        
+        if(creep.memory.dying){
+            if(creep.ticketToLive === CREEP_LIFE_TIME){
+                creep.memory.dying = false;
+            } else {
+                action.renew(creep);
+            }
+
+        }
+        switch(creep.carry.energy){
+            case creep.carryCapacity:
+                if(action.transferEnergy(creep) !== OK){
+                    return 'transfer';
+                }
+                new RoomVisual(creep.room.name).circle(creep.pos, {radius: .6, fill: 'transparent', stroke: '#ff0000', opacity: 0.5});
+                creep.say('i\'m full!');
+                return 'transfer incomplete';
+            case 0:
+                if(creep.ticksToLive <= 200){
+                    actions.renew(creep);
+                    creep.memory.dying = true;
+                    return 'renew';
+                }
+            default:
+                if(action.harvest(creep) !== OK){
+                    action.goToTarget(creep);
+                    return 'move';
+                }
+                return 'harvest';
+        }
     }
-  };
+};
