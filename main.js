@@ -1,5 +1,7 @@
 const log = require('logger');
 //log.debug('loaded logger');
+require('util.errorCodes');
+//log.debug('loaded error codes');
 const spawnAi = require('spawnLogic');
 //log.debug('loader spawnLogic');
 const Roles = require('Roles');

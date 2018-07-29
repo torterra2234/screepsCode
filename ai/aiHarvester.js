@@ -18,12 +18,14 @@ module.exports = {
                 creep.memory.dying = false;
             } else {
                 action.renew(creep);
+                return 'renew';
             }
 
         }
         switch(creep.carry.energy){
             case creep.carryCapacity:
-                if(action.transferEnergy(creep) !== OK){
+                // this needs redoing to use a container
+                if(action.transferEnergy(creep) === OK){
                     return 'transfer';
                 }
                 new RoomVisual(creep.room.name).circle(creep.pos, {radius: .6, fill: 'transparent', stroke: '#ff0000', opacity: 0.5});
@@ -38,7 +40,7 @@ module.exports = {
             default:
                 if(action.harvest(creep) !== OK){
                     action.goToTarget(creep);
-                    return 'move';
+                    return ERR_NOT_IN_RANGE;
                 }
                 return 'harvest';
         }

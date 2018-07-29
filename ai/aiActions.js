@@ -4,11 +4,11 @@
  */
 
 module.exports = {
-    assignMainTarget: function(role, target, isID = true){
+    assignTarget: function(creep, target, isID = true){
         if(isID){
-            creep.memory.targetMain = target;
+            return creep.memory.target = target;
         } else {
-        creep.memory.targetMain = target.id;
+            creep.memory.target = target.id;
         }
     },
 
@@ -27,6 +27,14 @@ module.exports = {
 
     upgrade: function(creep){
         return creep.upgradeController(Game.getObjectById(creep.memory.target));
+    },
+
+    heal: function(creep){
+        target = Game.getObjectById(creep.memory.target);
+        if(!target.needsHP){
+            return ERR_FULL;
+        }
+        return creep.heal(target);
     },
 
     // this needs improving to push top a given courier

@@ -14,11 +14,11 @@ module.exports.getOpenSource = function(room){
     return ERR_FULL;
 };
 
-module.exports.findMainTarget = function(role){
+module.exports.findTarget = function(role){
     switch(Roles[role].name){
         case 'harvester':
             return this.getOpenSource(creep.room, true);
         default:
-            return ERR_INVALID_ARGS;
+            return undefined;
     }
 };

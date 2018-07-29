@@ -20,7 +20,7 @@ module.exports.spawnNext = function(room){
     //log.debug('role' + role);
     let Spawner = room.getSpawners()[0];
     //log.debug(Spawner);
-    if(Spawner.spawnCreep(Roles[role].body, newName(role), {memory: {role: role, targetMain: util.findMainTarget}})){
+    if(Spawner.spawnCreep(Roles[role].body, newName(role), {memory: {role: role, targetMain: util.findTarget(role)}})){
         room.spawnedNext();
     }
 };
