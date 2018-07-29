@@ -2,6 +2,16 @@ module.exports = function() {
     Room.prototype.getSpawners = function(){
         return this.find(FIND_MY_SPAWNS);
     };
+    Room.prototype.getStructures = function(){
+        return _.filter(Game.structures, Structure, function(structure){
+            return structure.room.name === this.name;
+        });
+    };
+    Room.prototype.getConstructionSites = function(){
+        return _.filter(Game.constructionSites, ConstructionSite, function(constructionsSite){
+            return constructionsSite.room.name === this.name;
+        });
+    }
     Room.prototype.getCreeps = function(){
         return _.filter(Game.creeps, function(creep){
             return creep.room.name === this.name;
