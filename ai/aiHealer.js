@@ -6,6 +6,11 @@
 const action = require('aiActions');
 
 module.exports = {
+    /**
+     * Runs the AI for this role
+     * @param {creep} creep The creep to run
+     * @returns {Int} Value based on task undertaken
+     */
     run: function(creep){
         if(creep.memory.dying){
             if(creep.ticksToLive === CREEP_LIFE_TIME){

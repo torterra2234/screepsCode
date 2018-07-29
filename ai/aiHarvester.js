@@ -9,9 +9,15 @@
   * 
   * turn out this works differently, will have to check options for this
   */
+ 
 const action = require('aiActions');
 
 module.exports = {
+    /**
+     * Runs the AI for this role
+     * @param {creep} creep The creep to run
+     * @returns {Int} Value based on task undertaken
+     */
     run: function(creep){
         if(creep.memory.dying){
             if(creep.ticksToLive === CREEP_LIFE_TIME){
@@ -39,7 +45,7 @@ module.exports = {
                 }
             default:
                 if(action.harvest(creep) !== OK){
-                    action.goToTarget(creep);
+                    action.goToTarget(creep, Game.getObjectById(creep.memory.target).containerPos, 0);
                     return ERR_NOT_IN_RANGE;
                 }
                 return 'harvest';

@@ -1,4 +1,8 @@
 module.exports = function() {
+    /**
+     * Retrieves all spawners in the room
+     * @returns {StructureSpawn[]} An array of all spawners in the room
+     */
     Room.prototype.getSpawners = function(){
         return this.find(FIND_MY_SPAWNS);
     };

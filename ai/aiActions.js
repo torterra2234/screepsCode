@@ -4,14 +4,25 @@
  */
 
 module.exports = {
+    /**
+     * Assigns a target to a creep.
+     * @param {Creep} creep The creep to have its target assigned
+     * @param {String|Numeric} target The target RoomObject or ID
+     * @param {boolean} [isID=true] Is target an ID value
+     */
     assignTarget: function(creep, target, isID = true){
         if(isID){
-            return creep.memory.target = target;
+            creep.memory.target = target;
         } else {
             creep.memory.target = target.id;
         }
     },
 
+    /**
+     * Makes creep attempt to renew itself. UNFINISHED!
+     * @param {Creep} creep The creep that needs renewing
+     * @returns {int} Status code of action taken
+     */
     renew: function(creep){
         let targetSpawn = creep.room.find(FIND_STRUCTURES, STRUCTURE_SPAWN)[0];
         if(creep.pos.getRangeTo(targetSpawn.pos) > 1){
@@ -21,6 +32,11 @@ module.exports = {
 
     },
 
+    /**
+     * Makes creep try to harvest from target Source
+     * @param {Creep} creep The creep attempting to harvest
+     * @returns {Integer} Status code of action taken
+     */
     harvest: function(creep){
         return creep.harvest(Game.getObjectById(creep.memory.target));
     },
@@ -54,7 +70,29 @@ module.exports = {
         return creep.transfer(courier, RESOURCE_ENERGY, courier.carryCapacity - courier.carry.energy);
     },
 
-    goToTarget: function(creep){
-        return creep.travelTo(Game.getObjectById(creep.memory.targetCurr).pos);
+    withdrawEnergy: function(creep){
+        return creep.withdraw(Game.getObjectById(creep.memory.target), RESOURCE_ENERGY);
+    },
+
+    /**
+     * Transfers to creep in memory
+     * @param {Creep} creep Creep doing the trasfer
+     * @returns {number} status code of action
+     */
+    transferToCreep: function(creep){
+        let target = Game.getObjectById(creep.memory.target);
+        return creep.transfer(target, RESOURCE_ENERGY, target.carryCapacity - target.carry.capacity);
+    },
+    
+    /**
+     * Sends creep towards a target location
+     * @param {Creep} creep Creep to move
+     * @param {RoomPosition} [target=memorised target] Target position
+     * @param {number} [range=1] How close the creep must be to qualify as there 
+     */
+    goToTarget: function(creep, target, range){
+        target = target || Game.getObjectById(creep.memory.target).pos;
+        range = range || 1;
+        return creep.travelTo(target, {range: range});
     }
 }
