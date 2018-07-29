@@ -33,6 +33,7 @@ module.exports = {
         Ai: require('aiBuilder'),
         body: [WORK,CARRY,MOVE],
     },
+    /*
     'a': {
         name: 'Coal',
         count: 1,
