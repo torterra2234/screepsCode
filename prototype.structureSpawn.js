@@ -1,5 +1,5 @@
 module.exports = function(){
-    Object.defineProperty(StructureSpawn.prototype, 'renewQueue' {
+    Object.defineProperty(StructureSpawn.prototype, 'renewQueue', {
         get: function(){
             if(!this._renewQueue){
                 if(!this.memory.renewQueue){

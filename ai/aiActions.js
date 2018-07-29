@@ -22,7 +22,11 @@ module.exports = {
     },
 
     harvest: function(creep){
-        return creep.harvest(creep.memory.target);
+        return creep.harvest(Game.getObjectById(creep.memory.target));
+    },
+
+    upgrade: function(creep){
+        return creep.upgradeController(Game.getObjectById(creep.memory.target));
     },
 
     // this needs improving to push top a given courier

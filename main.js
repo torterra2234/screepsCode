@@ -4,15 +4,16 @@ const spawnAi = require('spawnLogic');
 //log.debug('loader spawnLogic');
 const Roles = require('Roles');
 //log.debug('loaded Roles');
-const maths = require('maths');
+const maths = require('util.maths');
 //log.debug('loaded maths');
-const consts = require('constants');
+var consts = require('util.constants');
 //log.debug('loaded constants');
 require('prototype.room')();
 //log.debug('loaded room prototype');
 require('Traveller.js');
 //log.debug('loaded Traveller');
-var action = require('aiActions');
+//var action = require('aiActions');
+var util = require('util.util');
 
 global.roomCreepCount = maths.calcRRC();
 

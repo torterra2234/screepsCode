@@ -14,7 +14,7 @@ const action = require('aiActions');
 module.exports = {
     run: function(creep){
         if(creep.memory.dying){
-            if(creep.ticketToLive === CREEP_LIFE_TIME){
+            if(creep.ticksToLive === CREEP_LIFE_TIME){
                 creep.memory.dying = false;
             } else {
                 action.renew(creep);
