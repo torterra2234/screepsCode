@@ -29,6 +29,14 @@ module.exports = {
         return creep.upgradeController(Game.getObjectById(creep.memory.target));
     },
 
+    repair: function(creep){
+        return creep.repair(Game.getObjectById(creep.memory.target));
+    },
+
+    build: function(creep){
+        return creep.build(Game.getObjectById(creep.memory.target));
+    },
+
     heal: function(creep){
         target = Game.getObjectById(creep.memory.target);
         if(!target.needsHP){

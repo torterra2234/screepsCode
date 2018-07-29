@@ -19,9 +19,13 @@ module.exports.spawnNext = function(room){
     let role = room.spawnQueue[0];
     //log.debug('role' + role);
     let Spawner = room.getSpawners()[0];
-    //log.debug(Spawner);
+    Spawner.cooldown--;
+    if(Spawner.cooldown > 0){
+        return ERR_BUSY;
+    }
     if(Spawner.spawnCreep(Roles[role].body, newName(role), {memory: {role: role, targetMain: util.findTarget(role)}})){
         room.spawnedNext();
+        spawner.cooldown = Roles[role].body.length;
     }
 };
 

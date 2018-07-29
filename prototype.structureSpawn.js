@@ -22,4 +22,20 @@ module.exports = function(){
             
         }
     }
+
+    Object.defineProperty(StructureSpawn.prototype, 'cooldown', {
+        get: function(){
+            if(!this._cooldown){
+                if(!this.memory.cooldown){
+                    this.memory.cooldown = 0;
+                }
+                this._cooldown = this.memory.cooldown;
+            }
+            return this._cooldown;
+        },
+        set: function(newValue){
+            this.memory.cooldown = newValue;
+            this._cooldown = newValue;
+        }
+    });
 }

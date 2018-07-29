@@ -21,9 +21,9 @@ module.exports = function() {
         get: function(){
             if(!this._sources){
                 if(!this.memory.sources){
-                    this.memory.sources = this.find(FIND_SOURCES);
+                    this.memory.sources = _.map(this.find(FIND_SOURCES), source => source.id);
                 }
-                this._sources = this.memory.sources;
+                this._sources = _.map(this.memory.sources, id => Game.getObjectById(id));
             }
             return this._sources;
         }

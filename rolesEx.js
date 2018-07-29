@@ -1,12 +1,5 @@
 // expanded roles file, to replace current version once ready
 
-/**
- * the counts defined here are to be set manually
- * this allows for full conrol over these counts
- * although methods for doing this from console
- * may be implemented later on.
- */
-
  //counts eventually need to be moved to the room prototype, potentially as a fetch, rather than fully assigned
 
 module.exports = {
