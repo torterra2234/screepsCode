@@ -6,31 +6,33 @@ module.exports = function() {
     Room.prototype.getSpawners = function(){
         return this.find(FIND_MY_SPAWNS);
     };
+    Room.prototype.getExtentions = function(){
+        return this.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_EXTENSION}});
+    };
+    Room.prototype.getSpawnEnergyProviders = function(){
+        log.debug(this.find(FIND_STRUCTURES));
+        return this.find(FIND_STRUCTURES).filter(function(structure){
+            log.debug('structure: ' + structure);
+            log.debug('structureType: ' + structure.structureType);
+            return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType ==  STRUCTURE_SPAWN)
+        });
+    }
     Room.prototype.getStructures = function(){
         let thisRoom = this;
         return _.filter(Game.structures, Structure, function(structure){
             return structure.room.name === thisRoom.name;
         });
     };
-    Room.prototype.getContainers = function(){
-        let thisRoom = this;
-        return _filter(Game.structures, Structure, function(structure){
-            return structure.structureType === STRUCTURE_CONTAINER;
-            }).filter(function(structure){
-                return structure.room.name === thisRoom.name;
-                })
-        ;
-    };
     Room.prototype.getConstructionSites = function(){
         let thisRoom = this;
-        return _.filter(Game.constructionSites, ConstructionSite, function(constructionsSite){
+        return _.filter(Game.constructionSites, ConstructionSite, function(constructionSite){
             return constructionsSite.room.name === thisRoom.name;
         });
     };
     Room.prototype.getCreeps = function(){
         let thisRoom = this;
         return _.filter(Game.creeps, function(creep){
-            return creep.room.name === thisRoom.name;
+            return creep.room === thisRoom.name;
         })
     };
     Object.defineProperty(Room.prototype, 'sources', {
@@ -70,19 +72,19 @@ module.exports = function() {
     });
     Room.prototype.addToQueue = function(role){
         this.spawnQueue.push(role);
-        this.memory.SpawnQueue = this.spawnQueue;
+        this.memory.spawnQueue = this.spawnQueue;
     };
     Room.prototype.spawnedNext = function(){
         this.spawnQueue.shift();
-        this.memory.SpawnQueue = this.spawnQueue;
+        this.memory.spawnQueue = this.spawnQueue;
     };
     Room.prototype.spawnNext = function(role){
         this.spawnQueue.unshift(role);
-        this.memory.SpawnQueue = this.spawnQueue;
+        this.memory.spawnQueue = this.spawnQueue;
     };
     Room.prototype.getCountInQueue = function(roleType){
         return _.filter(this.spawnQueue, function(role){
-            return role === roleType;
+            return Roles[role].name === Roles[roleType].name;
         }).length;
     };
     Room.prototype.removeFromQueue = function(delRole, pushToEnd = false){
@@ -90,7 +92,7 @@ module.exports = function() {
         this.spawnQueue = _.filter(spawnQueue, function(role){
             return role !== delRole;
         });
-        this.memory.SpawnQueue = this.spawnQueue;
+        this.memory.spawnQueue = this.spawnQueue;
         if(pushToEnd){
             for(;count > 0;count--){
                 this.addToQueue(role);

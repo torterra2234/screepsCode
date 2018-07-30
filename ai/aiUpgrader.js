@@ -16,8 +16,8 @@ module.exports = {
                 return -20;
             }
         }
-        if(creep.carry.energy <= creep.getActiveBodyParts(WORK)*20){
-            if(creeps.ticksToLive <= 200){
+        if(creep.carry.energy <= creep.getActiveBodyparts(WORK)*20){
+            if(creep.ticksToLive <= 200){
                 actions.renew(creep);
                 creep.memory.dying = true;
                 return 'renew';
@@ -31,7 +31,7 @@ module.exports = {
             }
         } else {
             new RoomVisual(creep.room.name).circle(creep.pos, {radius: .6, fill: 'transparent', stroke: '#ff0000', opacity: 0.5});
-            creep.say('need energy! ⚡');
+            creep.say('need ⚡');
             return ERR_NOT_ENOUGH_ENERGY;
         }
     }

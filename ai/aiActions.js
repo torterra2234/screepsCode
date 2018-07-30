@@ -83,7 +83,16 @@ module.exports = {
         let target = Game.getObjectById(creep.memory.target);
         return creep.transfer(target, RESOURCE_ENERGY, target.carryCapacity - target.carry.capacity);
     },
-    
+
+    /**
+     * Transfers to Object, creep or structure
+     * @param {Creep} creep Creep doing the transfer
+     * @returns {number} status code of action
+     */
+    transferToObject: function(creep){
+        let target = Game.getObjectById(creep.memory.target);
+        return creep.transfer(target, RESOURCE_ENERGY, target.energyCapacity - target.energy);
+    },
     /**
      * Sends creep towards a target location
      * @param {Creep} creep Creep to move

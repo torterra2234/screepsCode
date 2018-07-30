@@ -22,7 +22,7 @@ util = require('util.util');
 global.roomCreepCount = maths.calcRRC();
 
 module.exports.loop = function(){
-    log.debug(Game.time);
+    //log.status(Game.time);
 	// deleting old creeps
 	// needs forcibly automating later if possible
 	for(var name in Memory.creeps) {
@@ -45,7 +45,7 @@ module.exports.loop = function(){
 	// creep move loop
 	for(let name in Game.creeps){
 		let creep = Game.creeps[name];
-		log.status('running creep \'' + name + '\'');
+		//log.status('running creep \'' + name + '\'');
 		Roles[creep.memory.role].Ai.run(creep);
 	}
 };
