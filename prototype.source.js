@@ -1,11 +1,34 @@
 module.exports = function(){
     Source.prototype.getOpenSpots = function(){
+        thisSource = this;
         let x = this.pos.x;
         let y = this.pos.y;
-        return this.room.lookForAtArea(LOOK_TERRAIN, x-1, y-1, x+1, y+1, true).filter(terrain, function(terrain){
-            return terrain !== 'wall';
-        });
+        return this.room.lookForAtArea(LOOK_TERRAIN, y-1, x-1, y+1, x+1, true).filter(function(idx){
+            return idx.terrain !== 'wall';
+            }).map(function(idx){
+                return new RoomPosition(idx.x, idx.y, thisSource.room.name);
+                })
+        ;
     }
+
+    /**
+     * allows for use of memory on the source
+     */
+    Object.defineProperty(Source.prototype, 'memory', {
+        get: function(){
+            if(_.isUndefined(Memory.sources)){
+                Memory.sources = {};
+            }
+            return Memory.sources[this.id] = Memory.sources[this.id] || {};
+        },
+        set: function(newValue){
+            if(_.isUndefined(Memory.sources)){
+                Memory.sources = {};
+            }
+            Memory.sources[this.id] = newValue;
+        }
+    });
+
     Object.defineProperty(Source.prototype, 'containerPos', {
         get: function(){
             if(!this._cP){

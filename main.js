@@ -1,21 +1,23 @@
-const log = require('logger');
+log = require('logger');
 //log.debug('loaded logger');
 require('util.errorCodes');
 //log.debug('loaded error codes');
 const spawnAi = require('spawnLogic');
 //log.debug('loader spawnLogic');
-const Roles = require('Roles');
+Roles = require('rolesEx');
 //log.debug('loaded Roles');
-const maths = require('util.maths');
+maths = require('util.maths');
 //log.debug('loaded maths');
-var consts = require('util.constants');
+consts = require('util.constants');
 //log.debug('loaded constants');
 require('prototype.room')();
-//log.debug('loaded room prototype');
-require('Traveller.js');
+require('prototype.source')();
+require('prototype.structureSpawn');
+//log.status('loaded prototypes');
+require('Traveler');
 //log.debug('loaded Traveller');
 //var action = require('aiActions');
-var util = require('util.util');
+util = require('util.util');
 
 global.roomCreepCount = maths.calcRRC();
 

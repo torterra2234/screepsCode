@@ -10,8 +10,8 @@ module.exports = {
     /** @param {Creep} creep **/
     run: function(creep) {
         if(!creep.memory.cP){
-            for(let id in creep.room.sources){
-                let source = Game.getObjectById(id);
+            for(let idx in creep.room.sources){
+                let source = Game.getObjectById(creep.room.sources[idx].id);
                 let closest = source.pos.findClosestByPath(source.getOpenSpots());
                 closest.createConstructionSite(STRUCTURE_CONTAINER);
                 source.containerPos = closest;
