@@ -13,8 +13,13 @@ module.exports = {
                 creep.memory.dying = false;
             } else {
                 action.renew(creep);
-                return -20;
+                return ERR_NEEDS_LIFE;
             }
+        }
+        if(creep.ticksToLive <= 200){
+            creep.memory.dying = true;
+            action.renew(creep);
+            return ERR_NEEDS_LIFE;
         }
         if(creep.carry.energy <= creep.getActiveBodyparts(WORK)*20){
             if(creep.ticksToLive <= 200){

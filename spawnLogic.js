@@ -10,16 +10,16 @@ module.exports.getRoleNeededSpawns = function(role, room, roomCreeps){
 };
 
 module.exports.spawnNext = function(room){
+    let Spawner = room.getSpawners()[0]
     if(room.spawnQueue.length === 0){
-        return 0;
-    }
-    let role = room.spawnQueue[0];
-    let Spawner = room.getSpawners()[0];
-    Spawner.cooldown--;
-    if(Spawner.cooldown > 0){
         if(Spawner.renewQueue[0]){
             return Spawner.renewFromQueue();
         }
+        return OK;
+    }
+    let role = room.spawnQueue[0];
+    Spawner.cooldown--;
+    if(Spawner.cooldown > 0){
         return ERR_BUSY;
     }
     if(Spawner.spawnCreep(Roles[role].body, newName(role), {memory: {role: role, targetMain: util.findTarget(role)}})){

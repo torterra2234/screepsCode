@@ -13,7 +13,7 @@ require('util.errorCodes');
 //log.debug('loaded constants');
 require('prototype.room')();
 require('prototype.source')();
-require('prototype.structureSpawn');
+require('prototype.structureSpawn')();
 //log.status('loaded prototypes');
 require('Traveler');
 //log.debug('loaded Traveller');
@@ -46,7 +46,7 @@ module.exports.loop = function(){
 	// creep move loop
 	for(let name in Game.creeps){
 		let creep = Game.creeps[name];
-		log.status('running creep \'' + name + '\'');
+		//log.status('running creep \'' + name + '\'');
 		Roles[creep.memory.role].Ai.run(creep);
 	}
 };

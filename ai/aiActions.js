@@ -24,10 +24,15 @@ module.exports = {
      * @returns {int} Status code of action taken
      */
     renew: function(creep){
-        let targetSpawn = creep.room.find(FIND_STRUCTURES, STRUCTURE_SPAWN)[0];
+        if(!creep.memory.tS){
+            creep.memory.tS = creep.pos.findClosestByPath(creep.room.find(FIND_STRUCTURES, STRUCTURE_SPAWN)).id;
+        }
+        let targetSpawn = Game.getObjectById(creep.memory.tS);
         if(creep.pos.getRangeTo(targetSpawn.pos) > 1){
             creep.travelTo(targetSpawn.pos);
             return ERR_NOT_IN_RANGE;
+        } else {
+            targetSpawn.addToRenewQueue(creep.name);
         }
 
     },

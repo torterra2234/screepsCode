@@ -17,7 +17,7 @@ module.exports = {
     },
     'c': {
         name: 'Courier',
-        count: 2,
+        count: 1,
         Ai: require('aiCourier'),
         body: [CARRY,CARRY,MOVE],
     },

@@ -29,7 +29,6 @@ module.exports = {
 
         }
         if(!creep.memory.target){
-            log.debug('flag1');
             const remainingSources = creep.room.getOpenSources();
             log.debug(remainingSources);
             action.assignTarget(creep, remainingSources[0].id);
@@ -46,8 +45,8 @@ module.exports = {
                 return 'transfer incomplete';
             case 0:
                 if(creep.ticksToLive <= 200){
-                    actions.renew(creep);
                     creep.memory.dying = true;
+                    action.renew(creep);
                     return 'renew';
                 }
             default:

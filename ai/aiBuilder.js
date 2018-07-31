@@ -21,6 +21,12 @@ module.exports = {
                 return ERR_NEEDS_LIFE;
             }
         }
+        if(creep.ticksToLive <= 200){
+            log.debug('dying!');
+            creep.memory.dying = true;
+            action.renew(creep);
+            return ERR_NEEDS_LIFE;
+        }
         if(!creep.memory.target){
             log.debug('flag1');
             const roomStructs = creep.room.getStructures();
