@@ -18,16 +18,14 @@ module.exports = function() {
         });
     }
     Room.prototype.getStructures = function(){
-        let thisRoom = this;
-        return _.filter(Game.structures, Structure, function(structure){
-            return structure.room.name === thisRoom.name;
-        });
+        return this.find(FIND_STRUCTURES);
     };
+    /**
+     * Get array of construction sites
+     * @returns {ConstructionSite[]} Array of Construction site IDs
+     */
     Room.prototype.getConstructionSites = function(){
-        let thisRoom = this;
-        return _.filter(Game.constructionSites, ConstructionSite, function(constructionSite){
-            return constructionsSite.room.name === thisRoom.name;
-        });
+        return this.find(FIND_CONSTRUCTION_SITES);
     };
     Room.prototype.getCreeps = function(){
         let thisRoom = this;
@@ -57,6 +55,21 @@ module.exports = function() {
         this.memory.sources = undefined;
         this.sources = undefined;
     };
+    /**
+     * Gets the remaining untapped sources in the room
+     * @returns {StructureSource[]} list of sources
+     */
+    Room.prototype.getOpenSources = function(){
+        //i mean, it's on gitHub, should probably just return true :P
+        let sourceIDs = [];
+        for(let name in this.getCreeps){
+            const creep = Game.creeps[name];
+            if(creep.role = 'h'){
+                sourceIDs.push(creep.memory.target);
+            }
+        }
+        return this.sources.filter(source => !sourceIDs.includes(source.id));
+    }
     Object.defineProperty(Room.prototype, 'spawnQueue', {
         get: function() {
             if(!this._spawnQueue){

@@ -1,6 +1,3 @@
-const log = require('logger');
-const Roles = require('rolesEx');
-
 module.exports.getRoleNeededSpawns = function(role, room, roomCreeps){
     let missing = Roles[role].count
     missing -= room.getCountInQueue(role);
@@ -20,6 +17,9 @@ module.exports.spawnNext = function(room){
     let Spawner = room.getSpawners()[0];
     Spawner.cooldown--;
     if(Spawner.cooldown > 0){
+        if(Spawner.renewQueue[0]){
+            return Spawner.renewFromQueue();
+        }
         return ERR_BUSY;
     }
     if(Spawner.spawnCreep(Roles[role].body, newName(role), {memory: {role: role, targetMain: util.findTarget(role)}})){

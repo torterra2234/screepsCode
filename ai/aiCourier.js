@@ -52,6 +52,9 @@ module.exports = {
 
             }
         }
+        if(!creep.memory.target){
+            return ERR_INVALID_TARGET;
+        }
         target = Game.getObjectById(creep.memory.target);
         if(creep.carry.energy < target.energyCapacity){
             if(action.withdrawEnergy(creep) === ERR_NOT_IN_RANGE){

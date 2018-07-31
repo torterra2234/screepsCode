@@ -9,6 +9,7 @@ Roles = require('rolesEx');
 maths = require('util.maths');
 //log.debug('loaded maths');
 consts = require('util.constants');
+require('util.errorCodes');
 //log.debug('loaded constants');
 require('prototype.room')();
 require('prototype.source')();
@@ -45,7 +46,7 @@ module.exports.loop = function(){
 	// creep move loop
 	for(let name in Game.creeps){
 		let creep = Game.creeps[name];
-		//log.status('running creep \'' + name + '\'');
+		log.status('running creep \'' + name + '\'');
 		Roles[creep.memory.role].Ai.run(creep);
 	}
 };

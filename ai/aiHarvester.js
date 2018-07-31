@@ -28,13 +28,20 @@ module.exports = {
             }
 
         }
+        if(!creep.memory.target){
+            log.debug('flag1');
+            const remainingSources = creep.room.getOpenSources();
+            log.debug(remainingSources);
+            action.assignTarget(creep, remainingSources[0].id);
+            log.debug('assigned source: ' + creep.memory.target);
+        }
         switch(creep.carry.energy){
             case creep.carryCapacity:
                 // this needs redoing to use a container
                 if(action.transferEnergy(creep) === OK){
                     return 'transfer';
                 }
-                new RoomVisual(creep.room.name).circle(creep.pos, {radius: .6, fill: 'transparent', stroke: '#ff0000', opacity: 0.5});
+                new RoomVisual(creep.room.name).circle(creep.pos, {radius: .5, fill: 'transparent', stroke: '#ff0000', opacity: 0.5});
                 creep.say('i\'m full!');
                 return 'transfer incomplete';
             case 0:
@@ -45,7 +52,7 @@ module.exports = {
                 }
             default:
                 if(action.harvest(creep) !== OK){
-                    action.goToTarget(creep, Game.getObjectById(creep.memory.target).containerPos, 0);
+                    action.goToTarget(creep, Game.getObjectById(creep.memory.target).containerPos, {range: 0});
                     return ERR_NOT_IN_RANGE;
                 }
                 return 'harvest';

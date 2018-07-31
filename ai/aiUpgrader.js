@@ -30,7 +30,7 @@ module.exports = {
                 return ERR_NOT_IN_RANGE;
             }
         } else {
-            new RoomVisual(creep.room.name).circle(creep.pos, {radius: .6, fill: 'transparent', stroke: '#ff0000', opacity: 0.5});
+            new RoomVisual(creep.room.name).circle(creep.pos, {radius: .5, fill: 'transparent', stroke: '#ff0000', opacity: 0.5});
             creep.say('need ⚡');
             return ERR_NOT_ENOUGH_ENERGY;
         }
