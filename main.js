@@ -2,9 +2,9 @@ log = require('logger');
 //log.debug('loaded logger');
 require('util.errorCodes');
 //log.debug('loaded error codes');
-const spawnAi = require('spawnLogic');
+spawnAi = require('spawnLogic');
 //log.debug('loader spawnLogic');
-Roles = require('rolesEx');
+Roles = require('roles');
 //log.debug('loaded Roles');
 maths = require('util.maths');
 //log.debug('loaded maths');
@@ -36,7 +36,9 @@ module.exports.loop = function(){
 	//need code for checking spawner is unoccupied, per room
 	for(let name in Game.rooms){
 		let room = Game.rooms[name];
+		log.status('spawning in room ' + name);
 		if(Game.time%10 === 0){
+			log.status('Game time: ' + Game.time);
 			spawnAi.getAllNeededSpawns(room);
 		}
 		spawnAi.spawnNext(room);

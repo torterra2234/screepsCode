@@ -66,13 +66,21 @@ module.exports = {
         return creep.heal(target);
     },
 
-    // this needs improving to push top a given courier
-    // x/y of energy requester in memory? sounds like alot, but can clear once transferred
-    transferEnergy: function(creep){
-        let x = creep.pos.x;
-        let y = creep.pos.y;
-        let courier = creep.room.lookForAtArea(LOOK_CREEP, x-1, y-1, x+1, y+1, true)[0];
-        return creep.transfer(courier, RESOURCE_ENERGY, courier.carryCapacity - courier.carry.energy);
+    transferEnergyH: function(creep){
+        container = creep.room.lookForAt(LOOK_STRUCTURES, Game.getObjectById(creep.memory.target).containerPos);
+        if(container instanceof StructureContainer){
+            log.debug('empty is instance of?');
+            return creep.transfer(container,RESOURCE_ENERGY, container.storeCapacity - container.store[RESOURCE_ENERGY]);
+        }
+        container = creep.room.lookForAt(LOOK_CONSTRUCTION_SITES, Game.getObjectById(creep.memory.target).containerPos);
+        log.debug(container);
+        if(creep.build(container) === ERR_INVALID_TARGET){
+            if(this.moveOff(creep) === OK){
+               return creep.moveTo(Game.getObjectById(creep.memory.target).pos, {flee:true});
+            }
+            return ERR_INVALID_TARGET;
+        }
+        return creep.build(container);
     },
 
     withdrawEnergy: function(creep){
@@ -106,7 +114,31 @@ module.exports = {
      */
     goToTarget: function(creep, target, range){
         target = target || Game.getObjectById(creep.memory.target).pos;
-        range = range || 1;
-        return creep.travelTo(target, {range: range});
+        range = (range === 0 ?  0 : range || 1);
+        return creep.travelTo(target,{range: range});
+    },
+
+    /**
+     * Nasty function for getting a creep OFF a tile forcibly
+     */
+    moveOff: function(creep){
+        if(creep.move(TOP_LEFT) !== OK){
+            if(creep.move(TOP) !== OK){
+                if(creep.move(TOP_FIGHT) !== OK){
+                    if(creep.move(RIGHT) !== OK){
+                        if(creep.move(BOTTOM_RIGHT) !== OK){
+                            if(creep.move(BOTTOM) !== OK){
+                                if(creep.move(BOTTOM_LEFT) !== OK){
+                                    if(creep.move(LEFT) !== OK){
+                                        return ERR_NO_PATH;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return OK;
     }
 }
