@@ -80,6 +80,10 @@ module.exports = function() {
             }
             return this._spawnQueue;
         },
+        set: function(newValue) {
+            this._spawnQueue = newValue;
+            this.memory.spawnQueue = newValue;
+        },
         enumerable: false,
         configurable: true,
     });
