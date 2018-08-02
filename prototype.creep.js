@@ -67,6 +67,7 @@ module.exports = function(){
     /**
      * retrieves creep data from its name
      * @param {boolean} [roleFromName] whether to use the name to retrive the role
+     * @returns {object} object of parameters
      */
     Creep.prototype.parseNameToObject = function(roleFromName){
         return {room: this.getRoom(), id: this.getTypeID(), tier: this.getTier(), role: (roleFromName == true ? this.getRole() : this.memory.role)};
