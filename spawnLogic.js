@@ -22,7 +22,7 @@ module.exports.spawnNext = function(room){
     if(Spawner.cooldown > 0){
         return ERR_BUSY;
     }
-    if(Spawner.spawnCreep(Roles[roleKey].body, newName(roleKey), {memory: {role: roleKey, targetMain: util.findTarget(roleKey)}})){
+    if(Spawner.spawnCreep(Roles[roleKey].body, newName(roleKey, 1, room.name), {memory: {role: roleKey, targetMain: util.findTarget(roleKey)}})){
         room.spawnedNext();
         Spawner.cooldown = Roles[roleKey].body.length;
     }
@@ -42,13 +42,20 @@ module.exports.getAllNeededSpawns = function(room){
         }
     }
 };
-
-function newName(role){
+/**
+ * Finds first available name for the given creep type, tier, and owning room
+ * @param {String} role The Role of the creep being spawned
+ * @param {number} tier The Tier of the creep being spawned
+ * @param {String} room The Room the creep will work in
+ * @returns {String} Creep name to be assigned
+ */
+function newName(role, tier, room){
     let i = 0;
     do{
-        if(!Game.creeps[Roles[role].name + i]){
-            return (Roles[role].name + i);
+        const newName = room.name + ((i<<4) + tier) + Roles[role].name;
+        if(!Game.creeps[newName]){
+            return (newName);
         }
         i++;
-    }while(i < Roles[role].count)
+    }while(i < 64)
 }

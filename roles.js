@@ -4,31 +4,31 @@
 
 module.exports = {
     'dumb': {
-        name: 'DHR',
+        name: 'DHAR',
         count: 0,
         Ai: require('aiDumbHarvester'),
         body: [WORK,CARRY,MOVE],
     },
     'h': {
-        name: 'HRV',
+        name: 'HARV',
         count: 1,
         Ai: require('aiHarvester'),
         body: [WORK,WORK,CARRY,MOVE],
     },
     'c': {
-        name: 'CRR',
+        name: 'CARR',
         count: 1,
         Ai: require('aiCourier'),
         body: [CARRY,CARRY,MOVE],
     },
     'u': {
-        name: 'UPG',
+        name: 'UPGR',
         count: 1,
         Ai: require('aiUpgrader'),
         body: [WORK,CARRY,MOVE],
     },
     'b': {
-        name: 'BLD',
+        name: 'BUIL',
         count: 1,
         Ai: require('aiBuilder'),
         body: [WORK,CARRY,MOVE],
