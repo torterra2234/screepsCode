@@ -9,7 +9,7 @@ Roles = require('roles');
 maths = require('util.maths');
 //log.debug('loaded maths');
 consts = require('util.constants');
-require('util.errorCodes');
+require('util.newConstants');
 //log.debug('loaded constants');
 require('prototype.room')();
 require('prototype.source')();
